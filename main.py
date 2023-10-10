@@ -62,8 +62,10 @@ def main():
         # advisory summary
         advisorySummary = soups.find_all("h3", string=True)
         for tag in advisorySummary:
-            if str(tag.text).lower() == "summary":
+            if "summary" in str(tag.text).lower():
                 advisorySummaries.append(tag.findNext("p" or "ul").text.replace("•","*"))
+            else:
+                pass
 
         # advisory solution
         advisorySolution = soups.find_all("h3", string=True)
@@ -85,15 +87,15 @@ def main():
                         advisoryReferences.append(child.get("href"))
 
     # write data to a csv file
-    with open("output.csv", "a") as f_object:
+    with open("test.csv", "a") as f_object:
         writer_object = writer(f_object)
-        writer_object.writerow(advisoryTitles)
-        writer_object.writerow(advisoryIDs)
-        writer_object.writerow(advisoryLinks)
-        writer_object.writerow(advisoryDates)
+        # writer_object.writerow(advisoryTitles)
+        # writer_object.writerow(advisoryIDs)
+        # writer_object.writerow(advisoryLinks)
+        # writer_object.writerow(advisoryDates)
         writer_object.writerow(advisorySummaries)
-        writer_object.writerow(advisorySolutions)
-        writer_object.writerow(advisoryReferences)
+        # writer_object.writerow(advisorySolutions)
+        # writer_object.writerow(advisoryReferences)
         f_object.close()
 
 
