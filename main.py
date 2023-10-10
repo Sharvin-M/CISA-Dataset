@@ -85,7 +85,7 @@ def main():
                         advisoryReferences.append(child.get("href"))
 
     # write data to a csv file
-    with open("test.csv", "a") as f_object:
+    with open("output.csv", "a") as f_object:
         writer_object = writer(f_object)
         writer_object.writerow(advisoryTitles)
         writer_object.writerow(advisoryIDs)
