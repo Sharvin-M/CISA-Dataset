@@ -63,28 +63,30 @@ def main():
         advisorySummary = soups.find_all("h3", string=True)
         for tag in advisorySummary:
             if "summary" in str(tag.text).lower():
-                advisorySummaries.append(tag.findNext("p" or "ul").text.replace("•","*"))
-            else:
-                pass
+                if ":" in tag.text.lower():
+                    advisorySummaries.append(tag.findNext("ol" or "ul").findChildren().text)
+                elif ""
+                
 
-        # advisory solution
-        advisorySolution = soups.find_all("h3", string=True)
-        for tag in advisorySolution:
-            if tag.text == "Mitigations":
-                texts = tag.findNext("p").findNext().findChildren()
-                for t in texts:
-                        advisorySolutions.append(str(t.text))
 
-        # advisory reference
-        advisoryReference = soups.find_all("h3", string=True)
-        for tag in advisoryReference:
-            if tag.text == "References":
-                p_child = tag.findNext("p").findChildren("a")
-                for child in p_child:
-                    if child.text == "None":
-                        advisoryReferences.append("None")
-                    else:
-                        advisoryReferences.append(child.get("href"))
+        # # advisory solution
+        # advisorySolution = soups.find_all("h3", string=True)
+        # for tag in advisorySolution:
+        #     if tag.text == "Mitigations":
+        #         texts = tag.findNext("p").findNext().findChildren()
+        #         for t in texts:
+        #                 advisorySolutions.append(str(t.text))
+
+        # # advisory reference
+        # advisoryReference = soups.find_all("h3", string=True)
+        # for tag in advisoryReference:
+        #     if tag.text == "References":
+        #         p_child = tag.findNext("p").findChildren("a")
+        #         for child in p_child:
+        #             if child.text == "None":
+        #                 advisoryReferences.append("None")
+        #             else:
+        #                 advisoryReferences.append(child.get("href"))
 
     # write data to a csv file
     with open("test.csv", "a") as f_object:
