@@ -60,13 +60,11 @@ def main():
         advisoryLinks.append(urls)
 
         # advisory summary
-        advisorySummary = soups.find_all("h3", string=True)
-        for tag in advisorySummary:
-            if "summary" in str(tag.text).lower():
-                if ":" in tag.text.lower():
-                    advisorySummaries.append(tag.findNext("ol" or "ul").findChildren().text)
-                elif ""
-                
+        advisorySummary = soups.find("p", string=True)
+        if "summary" or "note:" in str(advisorySummarytext).lower():
+                advisorySummaries.append(advisorySummary.text)
+        else:
+            advisorySummaries.append("summary not found")
 
 
         # # advisory solution
