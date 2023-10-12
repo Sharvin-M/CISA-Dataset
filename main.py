@@ -59,21 +59,21 @@ def main():
         # advisory link
         advisoryLinks.append(urls)
 
-        # advisory summary
-        advisorySummary = soups.find("p", string=True)
-        if "summary" or "note:" in str(advisorySummarytext).lower():
-                advisorySummaries.append(advisorySummary.text)
-        else:
-            advisorySummaries.append("summary not found")
+        # # advisory summary
+        # advisorySummary = soups.find("p", string=True)
+        # if "summary" or "note:" in str(advisorySummarytext).lower():
+        #         advisorySummaries.append(advisorySummary.text)
+        # else:
+        #     advisorySummaries.append("summary not found")
 
 
-        # # advisory solution
-        # advisorySolution = soups.find_all("h3", string=True)
-        # for tag in advisorySolution:
-        #     if tag.text == "Mitigations":
-        #         texts = tag.findNext("p").findNext().findChildren()
-        #         for t in texts:
-        #                 advisorySolutions.append(str(t.text))
+        # advisory solution
+        advisorySolution = soups.find_all("h3", string=True)
+        for tag in advisorySolution:
+            if tag.text == "Mitigations":
+                texts = tag.findNext("p").findNext().findChildren()
+                for t in texts:
+                        advisorySolutions.append(str(t.text))
 
         # # advisory reference
         # advisoryReference = soups.find_all("h3", string=True)
@@ -93,8 +93,8 @@ def main():
         # writer_object.writerow(advisoryIDs)
         # writer_object.writerow(advisoryLinks)
         # writer_object.writerow(advisoryDates)
-        writer_object.writerow(advisorySummaries)
-        # writer_object.writerow(advisorySolutions)
+        # writer_object.writerow(advisorySummaries)
+        writer_object.writerow(advisorySolutions)
         # writer_object.writerow(advisoryReferences)
         f_object.close()
 
