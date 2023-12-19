@@ -1,10 +1,9 @@
-import requests, csv
+import requests
 from csv import writer
 from bs4 import BeautifulSoup as bs
 from bs4 import SoupStrainer as strainer
-import urllib
 
-# initialized lists for standard fields 
+# initialized lists for standard fields
 advisoryTitles = []
 advisoryIDs = []
 advisoryDates = []
@@ -44,8 +43,9 @@ def main():
     # iterate through each individual page
     length = len(advisoryIDs)
     for j in range(length):
-        urls = "https://www.cisa.gov/news-events/cybersecurity-advisories/" + (
-            advisoryIDs[j]
+        urls = (
+            "https://www.cisa.gov/news-events/cybersecurity-advisories/"
+            + (advisoryIDs[j])
         )  # for every id create a new link
         advisories = requests.get(urls)
         only_section_content = strainer(
@@ -62,7 +62,7 @@ def main():
             if tag.text == "Mitigations":
                 texts = tag.findNext("p").findNext().findChildren()
                 for t in texts:
-                        advisorySolutions.append(str(t.text))
+                    advisorySolutions.append(str(t.text))
 
     # write data to a csv file
     with open("test.csv", "a") as f_object:
@@ -73,6 +73,7 @@ def main():
         writer_object.writerow(advisoryDates)
         writer_object.writerow(advisorySolutions)
         f_object.close()
+
 
 if __name__ == "__main__":
     main()
