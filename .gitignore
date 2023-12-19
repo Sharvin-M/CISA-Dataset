@@ -1,6 +1,7 @@
 test.csv
 output.csv
 finalOutput.csv
+venv/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

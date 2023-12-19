@@ -1,7 +1,6 @@
 import requests, csv
 from csv import writer
 from bs4 import BeautifulSoup as bs
-import pandas as pd
 from bs4 import SoupStrainer as strainer
 import urllib
 
@@ -9,15 +8,13 @@ import urllib
 advisoryTitles = []
 advisoryIDs = []
 advisoryDates = []
-advisorySummaries = []
 advisorySolutions = []
-advisoryReferences = []
 advisoryLinks = []
 
 
 def main():
     # iterate through each page, parse only necessary parts
-    for page in range(0, 12):
+    for page in range(0, 15):
         url = "https://www.cisa.gov/news-events/cybersecurity-advisories?f%5B0%5D=advisory_type%3A94&page={page}".format(
             page=page
         )
@@ -59,14 +56,6 @@ def main():
         # advisory link
         advisoryLinks.append(urls)
 
-        # # advisory summary
-        # advisorySummary = soups.find("p", string=True)
-        # if "summary" or "note:" in str(advisorySummarytext).lower():
-        #         advisorySummaries.append(advisorySummary.text)
-        # else:
-        #     advisorySummaries.append("summary not found")
-
-
         # advisory solution
         advisorySolution = soups.find_all("h3", string=True)
         for tag in advisorySolution:
@@ -75,28 +64,15 @@ def main():
                 for t in texts:
                         advisorySolutions.append(str(t.text))
 
-        # # advisory reference
-        # advisoryReference = soups.find_all("h3", string=True)
-        # for tag in advisoryReference:
-        #     if tag.text == "References":
-        #         p_child = tag.findNext("p").findChildren("a")
-        #         for child in p_child:
-        #             if child.text == "None":
-        #                 advisoryReferences.append("None")
-        #             else:
-        #                 advisoryReferences.append(child.get("href"))
-
     # write data to a csv file
     with open("test.csv", "a") as f_object:
         writer_object = writer(f_object)
-        # writer_object.writerow(advisoryTitles)
-        # writer_object.writerow(advisoryIDs)
-        # writer_object.writerow(advisoryLinks)
-        # writer_object.writerow(advisoryDates)
-        # writer_object.writerow(advisorySummaries)
+        writer_object.writerow(advisoryTitles)
+        writer_object.writerow(advisoryIDs)
+        writer_object.writerow(advisoryLinks)
+        writer_object.writerow(advisoryDates)
         writer_object.writerow(advisorySolutions)
-        # writer_object.writerow(advisoryReferences)
         f_object.close()
 
-
-main()
+if __name__ == "__main__":
+    main()
