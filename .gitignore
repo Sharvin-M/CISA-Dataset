@@ -1,6 +1,5 @@
-test.csv
-output.csv
-finalOutput.csv
+.ruff_cache/
+csvFiles/
 venv/
 # Byte-compiled / optimized / DLL files
 __pycache__/
