@@ -40,38 +40,22 @@ def main():
         for tag in advisoryDate:
             advisoryDates.append(tag.text.strip())
 
-    # iterate through each individual page
-    length = len(advisoryIDs)
-    for j in range(length):
+    for j in range(len(advisoryIDs)):
         urls = (
             "https://www.cisa.gov/news-events/cybersecurity-advisories/"
             + (advisoryIDs[j])
-        )  # for every id create a new link
-        advisories = requests.get(urls)
-        only_section_content = strainer(
-            "div", attrs={"class": "l-page-section__content"}
-        )  # specify class to parse
-        soups = bs(advisories.content, "html.parser", parse_only=only_section_content)
+        )
 
         # advisory link
         advisoryLinks.append(urls)
 
-        # advisory solution
-        advisorySolution = soups.find_all("h3", string=True)
-        for tag in advisorySolution:
-            if tag.text == "Mitigations":
-                texts = tag.findNext("p").findNext().findChildren()
-                for t in texts:
-                    advisorySolutions.append(str(t.text))
-
     # write data to a csv file
-    with open("test.csv", "a") as f_object:
+    with open("csvFiles/test.csv", "w") as f_object:
         writer_object = writer(f_object)
         writer_object.writerow(advisoryTitles)
         writer_object.writerow(advisoryIDs)
         writer_object.writerow(advisoryLinks)
         writer_object.writerow(advisoryDates)
-        writer_object.writerow(advisorySolutions)
         f_object.close()
 
 
